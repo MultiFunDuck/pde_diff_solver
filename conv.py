@@ -37,12 +37,13 @@ class converter:
         return scd_heat_map
 
     def img_from_heat_map(self, heat_map):
-        scd_heat_map = self.scale_heat_map(heat_map)
+        scd_heat_map = heat_map
         x_num, y_num = heat_map.shape
 
         rgbArray = np.zeros((x_num,y_num,3), 'uint8')
-        rgbArray[..., 0] = 0.8*scd_heat_map*256
-        rgbArray[..., 2] = 0.8*(1 - scd_heat_map)*256
+        rgbArray[..., 0] = 256*(1 - scd_heat_map)/2
+        rgbArray[..., 1] = 256
+        rgbArray[..., 2] = 256*(1 + scd_heat_map)/2
 
         return Image.fromarray(rgbArray)
 
